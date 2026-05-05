@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Page Summarizer — Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>AI Page Summarizer</h1>
+    <p class="lede">Settings</p>
+
+    <section class="card">
+      <h2>Gemini API key</h2>
+      <p class="help">
+        Your key is stored locally in your browser and never sent anywhere
+        except directly to Google's Gemini API.
+        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">
+          Get a free key →
+        </a>
+      </p>
+
+      <div class="field">
+        <label for="api-key">API key</label>
+        <div class="input-row">
+          <input
+            id="api-key"
+            type="password"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="AIza..."
+          />
+          <button id="toggle-visibility" type="button" class="icon-btn" aria-label="Show key">👁</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="save-btn" type="button">Save</button>
+        <button id="clear-btn" type="button" class="secondary">Clear</button>
+      </div>
+
+      <p id="status" class="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>

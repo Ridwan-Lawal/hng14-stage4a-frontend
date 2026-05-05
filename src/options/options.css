@@ -1,0 +1,89 @@
+:root {
+  --bg: #f5f5f7;
+  --card: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #666;
+  --border: #e0e0e0;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #16a34a;
+  --error: #dc2626;
+  --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: var(--fg);
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.container { max-width: 600px; margin: 40px auto; padding: 0 20px; }
+h1 { margin: 0 0 4px; font-size: 24px; }
+.lede { margin: 0 0 24px; color: var(--muted); }
+h2 { margin: 0 0 8px; font-size: 16px; }
+
+.card {
+  background: var(--card);
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.help { margin: 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.help a { color: var(--primary); text-decoration: none; }
+.help a:hover { text-decoration: underline; }
+
+.field { margin-bottom: 16px; }
+label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 13px; }
+
+.input-row { display: flex; gap: 8px; }
+
+input[type="password"], input[type="text"] {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+}
+
+input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+  border-color: var(--primary);
+}
+
+.icon-btn {
+  padding: 0 12px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.actions { display: flex; gap: 8px; }
+
+button {
+  padding: 8px 16px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) { background: var(--primary-hover); }
+button.secondary { background: transparent; color: var(--fg); border-color: var(--border); }
+button.secondary:hover:not(:disabled) { background: #f5f5f5; }
+
+.status { margin: 12px 0 0; font-size: 13px; min-height: 1.2em; }
+.status.success { color: var(--success); }
+.status.error { color: var(--error); }

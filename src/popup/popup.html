@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Page Summarizer</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1 id="page-title">Loading…</h1>
+    </header>
+
+    <div class="actions">
+      <button id="summarize-btn" type="button">Summarize Page</button>
+      <button id="clear-btn" type="button" class="secondary">Clear</button>
+    </div>
+
+    <section id="status" class="status" aria-live="polite"></section>
+
+    <section id="summary" class="summary" aria-live="polite"></section>
+
+    <footer>
+  <button id="copy-btn" type="button" class="footer-btn" hidden>Copy</button>
+  <a href="#" id="options-link" class="footer-link">Settings</a>
+</footer>
+  </main>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

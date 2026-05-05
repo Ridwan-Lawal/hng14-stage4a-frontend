@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "AI Page Summarizer",
+  "version": "0.1.0",
+  "description": "Summarizes the current webpage using AI. Extracts content, generates bullet-point summaries and key insights.",
+
+  "action": {
+    "default_title": "Summarize this page",
+    "default_popup": "src/popup/popup.html"
+  },
+
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+
+  "options_page": "src/options/options.html",
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["src/content/content-script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*"
+  ]
+}
