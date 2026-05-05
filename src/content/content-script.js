@@ -18,7 +18,8 @@ import { Readability, isProbablyReaderable } from '@mozilla/readability';
       sendResponse({ ok: false, error: err.message });
     }
 
-    return true;
+    // return true
+   
   });
 
   function extractContent() {

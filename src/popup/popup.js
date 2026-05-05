@@ -80,26 +80,52 @@ function setSummary(html) {
 }
 
 
-function renderSummary({ bullets, insights, readingTimeMinutes }) {
-  const parts = [];
-
-  if (readingTimeMinutes) {
-    parts.push(`<div class="meta">⏱ Estimated ${readingTimeMinutes} min read</div>`);
+function renderSummary(summaryData) {
+  if (typeof summaryData === 'string') {
+    summaryEl.innerHTML = formatStringSummary(summaryData);
+    return;
   }
 
+  // Fallback for old structured format
+  const { bullets, insights, readingTimeMinutes } = summaryData;
+  const parts = [];
+  if (readingTimeMinutes) {
+    parts.push(`<div class="meta">⏱ ${readingTimeMinutes} min read</div>`);
+  }
   if (bullets?.length) {
-    parts.push('<h3>Summary</h3><ul>');
+    parts.push('<ul class="summary-list">');
     for (const b of bullets) parts.push(`<li>${escapeHtml(b)}</li>`);
     parts.push('</ul>');
   }
+  summaryEl.innerHTML = parts.join('');
+}
 
-  if (insights?.length) {
-    parts.push('<h3>Key insights</h3><ul>');
-    for (const i of insights) parts.push(`<li>${escapeHtml(i)}</li>`);
-    parts.push('</ul>');
+function formatStringSummary(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const html = [];
+  let inList = false;
+
+  for (const line of lines) {
+    const bulletMatch = line.match(/^[•\-\*]\s+(.+)/);
+    const numberedMatch = line.match(/^\d+\.\s+(.+)/);
+    const isHeader = /:\s*$/.test(line) ||
+      (line.length >= 3 && line === line.toUpperCase() && /[A-Z]/.test(line));
+
+    if (bulletMatch || numberedMatch) {
+      if (!inList) { html.push('<ul class="summary-list">'); inList = true; }
+      html.push(`<li>${escapeHtml((bulletMatch ?? numberedMatch)[1])}</li>`);
+    } else {
+      if (inList) { html.push('</ul>'); inList = false; }
+      if (isHeader) {
+        html.push(`<h3>${escapeHtml(line.replace(/:$/, ''))}</h3>`);
+      } else {
+        html.push(`<p class="summary-para">${escapeHtml(line)}</p>`);
+      }
+    }
   }
 
-  summaryEl.innerHTML = parts.join('');
+  if (inList) html.push('</ul>');
+  return `<div class="summary-body">${html.join('')}</div>`;
 }
 
 function escapeHtml(str) {
@@ -127,17 +153,17 @@ copyBtn.addEventListener('click', async () => {
   }
 });
 
-function formatSummaryAsText({ bullets, insights, readingTimeMinutes }) {
+function formatSummaryAsText(summaryData) {
+  // If it's already a string, just return it
+  if (typeof summaryData === 'string') return summaryData;
+
+  // Otherwise, use the old formatting logic
+  const { bullets, insights, readingTimeMinutes } = summaryData;
   const lines = [];
   if (readingTimeMinutes) lines.push(`Estimated ${readingTimeMinutes} min read`, '');
   if (bullets?.length) {
     lines.push('Summary:');
     for (const b of bullets) lines.push(`• ${b}`);
-    lines.push('');
-  }
-  if (insights?.length) {
-    lines.push('Key insights:');
-    for (const i of insights) lines.push(`• ${i}`);
   }
   return lines.join('\n').trim();
 }
